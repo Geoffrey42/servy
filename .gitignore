@@ -24,3 +24,7 @@ servy-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# IDE-related
+.idea/
+servy.iml
