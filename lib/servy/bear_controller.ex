@@ -1,5 +1,4 @@
 defmodule Servy.BearController do
-
   alias Servy.Conv
   alias Servy.Wildthings
   alias Servy.Bear
@@ -10,7 +9,7 @@ defmodule Servy.BearController do
       Wildthings.list_bears()
       |> Enum.sort(&Bear.order_asc_by_name/2)
 
-      View.render(conv, "index.eex", bears: bears)
+    View.render(conv, "index.eex", bears: bears)
   end
 
   def show(conv, %{"id" => id}) do
@@ -22,8 +21,8 @@ defmodule Servy.BearController do
   def create(conv, %{"name" => name, "type" => type}) do
     %Conv{
       conv
-    | status: 201,
-      resp_body: "Create a #{type} bear named #{name}"
+      | status: 201,
+        resp_body: "Create a #{type} bear named #{name}"
     }
   end
 

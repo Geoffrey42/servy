@@ -7,7 +7,7 @@ defmodule Servy.Plugins do
 
   @doc "Logs 404 requests"
   def track(%Conv{status: 404, path: path} = conv) do
-    Logger.warn("#{path} is on the loose!")
+    Logger.warning("#{path} is on the loose!")
     conv
   end
 
