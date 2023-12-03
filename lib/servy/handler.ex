@@ -19,11 +19,16 @@ defmodule Servy.Handler do
     |> route
     |> track
     |> emojify
+    |> put_content_length
     |> format_response
   end
 
   def route(%Conv{method: "GET", path: "/wildthings"} = conv) do
     %Conv{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
+  end
+
+  def route(%Conv{method: "GET", path: "/api/bears"} = conv) do
+    Servy.Api.BearController.index(conv)
   end
 
   def route(%Conv{method: "GET", path: "/bears"} = conv) do
@@ -78,11 +83,17 @@ defmodule Servy.Handler do
 
   defp emojify(%Conv{} = conv), do: conv
 
+  defp put_content_length(conv) do
+    new_headers = Map.put(conv.resp_headers, "Content-Length", byte_size(conv.resp_body))
+
+    %{conv | resp_headers: new_headers}
+  end
+
   def format_response(%Conv{} = conv) do
     """
     HTTP.1.1 #{Conv.full_status(conv)}\r
-    Content-type: text/html\r
-    Content-length: #{byte_size(conv.resp_body)}\r
+    Content-Type: #{conv.resp_headers["Content-Type"]}\r
+    Content-Length: #{conv.resp_headers["Content-Length"]}\r
     \r
     #{conv.resp_body}
     """

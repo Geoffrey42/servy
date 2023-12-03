@@ -17,7 +17,8 @@ defmodule Servy.Parser do
       method: method,
       path: path,
       params: params,
-      headers: headers
+      headers: headers,
+      resp_headers: %{"Content-Type" => "text/html"}
     }
   end
 
